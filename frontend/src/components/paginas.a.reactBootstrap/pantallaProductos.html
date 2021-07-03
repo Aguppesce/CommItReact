@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Productos</title>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
+    <a class="p-0 m-0 navbar-brand" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item dropdown list-unstyled">
+        <img id="logo" src="../images/logo.png" alt="Logo empresa" />
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="#">Muebles Interior</a>
+      <a class="dropdown-item" href="#">Muebles Exterior</a>
+    </div>
+    </li>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="../../index.html">Muebles Ragnar</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- FIN NAVBAR -->
+
+  <div class="content content-margined">
+    <div class="product-header">
+      <h3>Productos</h3>
+      <button class="button primary">Crear Producto</button>
+    </div>
+    <div class="form">
+      <form>
+        <ul class="form-container">
+          <li>
+            <h2>Crear Producto</h2>
+          </li>
+          <li>
+            <label for="name">Nombre</label>            
+            <input type="text" name="name" value="" id="name"></input>
+          </li>
+          <li>
+            <label for="image">Imagen</label>
+            <input type="text" name="image" value="" id="image"></input>
+          </li>
+          <li>
+            <label for="price">Precio</label>
+            <input type="text" name="price" value="" id="price"></input>
+          </li>
+          
+          <li>
+            <label for="brand">Marca</label>
+            <input type="text" name="brand" value="" id="brand"></input>
+          </li>
+          <li>
+            <label for="model">Modelo</label>
+            <input type="text" name="model" value="" id="model"></input>
+          </li>
+          <li>
+            <label for="name">Categoría</label>
+            <input type="text" name="category" value="" id="category"></input>
+          </li>
+          <li>
+            <label for="countInStock">Stock</label>
+            <input type="text" name="countInStock" value="" id="countInStock"></input>
+          </li>
+          
+          <li>
+            <label for="description">Descripción</label>
+            <textarea name="description" value="" id="description"></textarea>
+          </li>
+          <li>
+            <button type="submit" class="btn btn-success btn-lg">Actualizar / Crear</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+
+    <div class="form">
+      <form>
+        <ul class="form-container">
+          <li>
+            <h2>Crear Producto</h2>
+          </li>
+          <li>
+            <label htmlFor="name">Nombre</label>
+            <input type="text" name="name" id="name"></input>
+          </li>
+          <li>
+            <label htmlFor="price">Precio</label>
+            <input type="text" name="price" id="price"></input>
+          </li>
+          <li>
+            <label htmlFor="image">Imagen</label>
+            <input type="text" name="image" id="image"></input>
+          </li>
+          <li>
+            <label htmlFor="brand">Marca</label>
+            <input type="text" name="brand" id="brand"></input>
+          </li>
+          <li>
+            <label htmlFor="countInStock">Stock</label>
+            <input type="text" name="countInStock" id="countInStock"></input>
+          </li>
+          <li>
+            <label htmlFor="category">Categoría</label>
+            <input type="text" name="category" id="category"></input>
+          </li>
+          <li>
+            <label htmlFor="description">Descripción</label>
+            <textarea name="description" id="description"></textarea>
+          </li>
+          <li>
+            <button type="submit" class="button primary">Crear</button>
+          </li>
+          <li>
+            <button type="button" class="button secondary">Crear</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+    <div class="product-list">
+      <table class="table">
+        <thread>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Acción</th>
+          </tr>
+        </thread>
+        <tbody>
+          <tr>
+            <td>mueble.id</td>
+            <td>mueble.nombre</td>
+            <td>mueble.precio</td>
+            <td>mueble.categoria</td>
+            <td>mueble.marca</td>
+            <td>
+              <button class="button">Editar</button>
+              <button class="button">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
+  </script>
+
+  <script src="js/data.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
