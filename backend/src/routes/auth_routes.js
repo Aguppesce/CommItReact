@@ -33,6 +33,7 @@ router.post('/',(req,res)=>{
 
         req.session.user = { 
           name: nombreCompleto,
+          id_usuario: result[0].id_usuario
         };
 
         console.log(req.session.user);

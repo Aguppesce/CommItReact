@@ -11,6 +11,11 @@ import FormControl from "react-bootstrap/FormControl";
 import logo from "../assets/images/logo.png";
 import LoginModal from "./LoginModal";
 
+import { Link } from 'react-router-dom'
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
+
 export default function NavigationBar(props) {
   const logoStyle = {
     height: "10vh",
@@ -75,9 +80,11 @@ export default function NavigationBar(props) {
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand href="#home">
-          <img style={logoStyle} src={logo} />
-        </Navbar.Brand>
+        <Link to="/">
+          <Navbar.Brand href="#home">
+            <img style={logoStyle} src={logo} />
+          </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -94,11 +101,15 @@ export default function NavigationBar(props) {
             <Button variant="outline-success">Search</Button>
           </Form>
           <Nav className="ml-auto">
-            <Nav.Link href="#">Carrito</Nav.Link>
+            <Nav.Link href="#"><FontAwesomeIcon color="white" className="fa-2x mr-3" icon={faCartPlus} /></Nav.Link>
 
             {props.user ? (
-              <>
+              <>                    
+                <Link to="/mispublicaciones" className="nav-link">Mis Publicaciones</Link>
+                <Link to="/favoritos" className="nav-link">Favoritos</Link>
+                
                 <NavDropdown
+                
                   alignRight
                   title={props.user.name}
                   id="basic-nav-dropdown"

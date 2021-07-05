@@ -4,11 +4,11 @@ const connection = require('../connection')
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-  const sql = 'SELECT * FROM categorias'
+  const sql = 'SELECT * FROM categorias ORDER BY nombre'
 
   connection.query(sql, (error, result)=>{
     if( error ){
-      res.send('Error al obtener la cateogria')
+      res.send('Error al obtener las cateogria')
     }else{
       res.json(result);
     }

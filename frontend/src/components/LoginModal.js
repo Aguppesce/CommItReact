@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form"
 
+import { Link } from "react-router-dom";
+
 export default function LoginModal(props) {
 
   const [email, setEmail] = useState('')
@@ -44,6 +46,7 @@ export default function LoginModal(props) {
               onChange={ handlePasswordChange }/>
           </Form.Group>
         </Form>
+        <Link to="/register">No tienes una cuenta?</Link>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleCloseLoginModal}>

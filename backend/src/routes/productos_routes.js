@@ -3,6 +3,7 @@ const connection = require("../connection");
 
 const router = express.Router();
 
+//MOSTRAR TODOS LOS PRODUCTOS
 router.get("/", (req, res) => {
   const sql = "SELECT * FROM productos";
 
@@ -15,6 +16,23 @@ router.get("/", (req, res) => {
   });
 });
 
+//MOSTRAR PRODUCTOS O PUBLICACIONES DE UN USUARIO
+router.get("/userpubs", (req, res) => {
+  console.log(req.session.user.id_usuario);
+
+  const sql= `SELECT * FROM productos WHERE id_usuario = ?`
+
+  connection.query(sql, [req.session.user.id_usuario], (err,result)=>{
+    if(err) {
+      res.send('Error al obtener las publicaciones del usuario')
+    }else{
+      res.json(result);
+    }
+  })
+});
+
+
+//MOSTRAR UN PRODUCTO ESPECÍFICO
 router.get("/:id_mueble", (req, res) => {
   const idMueble = req.params.id_mueble;
 
@@ -22,31 +40,35 @@ router.get("/:id_mueble", (req, res) => {
 
   connection.query(sql, [idMueble], (error, result) => {
     if (error) {
-      res.send("Error al obtener los productos");
+      res.send("Error al obtener el producto");
     } else {
-      res.json(result);
+      res.json(result[0]);
     }
   });
 });
 
+
+//AGREGAR
 router.post("/", (req, res) => {
   const sql = `INSERT INTO 
                productos (nombre, imagen, precio, marca, 
-               modelo, categoria, stock, descripcion) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+               modelo, id_categoria, stock, descripcion, id_usuario) 
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   const nombre = req.body.nombre;
   const imagen = req.body.imagen;
   const precio = req.body.precio;
   const marca = req.body.marca;
   const modelo = req.body.modelo;
-  const categoria = req.body.categoria;
+  const categoria = req.body.id_categoria;
   const stock = req.body.stock;
   const descripcion = req.body.descripcion;
+  const id_usuario = req.body.id_usuario;
+  
 
   connection.query(
     sql,
-    [nombre, imagen, precio, marca, modelo, categoria, stock, descripcion],
+    [nombre, imagen, precio, marca, modelo, categoria, stock, descripcion, id_usuario],
     (err, result) => {
       if (err) {
         res.send("Error al insertar el producto");
@@ -57,18 +79,20 @@ router.post("/", (req, res) => {
   );
 });
 
+//MODIFICAR
 router.put("/:id_mueble", (req, res) => {
   const sql = `UPDATE productos SET nombre=?, imagen=?, precio=?, marca=?, 
-               modelo=?, categoria=?, stock=?, descripcion=? WHERE id_mueble=?`;
+               modelo=?, id_categoria=?, stock=?, descripcion=?, id_usuario=? WHERE id_mueble=?`;
 
   const nombre = req.body.nombre;
   const imagen = req.body.imagen;
   const precio = req.body.precio;
   const marca = req.body.marca;
   const modelo = req.body.modelo;
-  const categoria = req.body.categoria;
+  const categoria = req.body.id_categoria;
   const stock = req.body.stock;
   const descripcion = req.body.descripcion;
+  const id_usuario = req.body.id_usuario;
   const id_mueble = req.params.id_mueble;
 
   connection.query(
@@ -82,7 +106,9 @@ router.put("/:id_mueble", (req, res) => {
       categoria,
       stock,
       descripcion,
-      id_mueble,
+      id_usuario,
+      id_mueble
+      
     ],
     (err, result) => {
       if (err) {
@@ -93,6 +119,7 @@ router.put("/:id_mueble", (req, res) => {
     }
   );
 });
+
 router.delete("/:id_mueble", (req, res) => {
   const sql = `DELETE FROM productos WHERE id_mueble=?`;
 
