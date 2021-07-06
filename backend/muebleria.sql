@@ -22,33 +22,8 @@ CREATE TABLE IF NOT EXISTS `muebleria`.`categorias` (
   `id_categoria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   PRIMARY KEY (`id_categoria`),
-  UNIQUE INDEX `id_categoria_UNIQUE` (`id_categoria` ASC),
-  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC))
-ENGINE = InnoDB;
-
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- Table `muebleria`.`productos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `muebleria`.`productos` (
-  `id_mueble` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `imagen` VARCHAR(100) NULL,
-  `precio` INT NOT NULL,
-  `marca` VARCHAR(45) NULL,
-  `modelo` VARCHAR(45) NULL,
-  `id_categoria` INT NOT NULL,
-  `stock` INT(4) NOT NULL,
-  `descripcion` VARCHAR(500) NULL,
-  PRIMARY KEY (`id_mueble`, `id_categoria`),
-  UNIQUE INDEX `id_mueble_UNIQUE` (`id_mueble` ASC),
-  INDEX `id_categoria_idx` (`id_categoria` ASC),
-  CONSTRAINT `id_categoria`
-    FOREIGN KEY (`id_categoria`)
-    REFERENCES `muebleria`.`categorias` (`id_categoria`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `id_categoria_UNIQUE` (`id_categoria` ASC) ,
+  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) )
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -68,9 +43,41 @@ CREATE TABLE IF NOT EXISTS `muebleria`.`usuarios` (
   `cod_postal` VARCHAR(45) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id_usuario`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `id_usuario_UNIQUE` (`id_usuario` ASC),
-  UNIQUE INDEX `usuario_UNIQUE` (`usuario` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `id_usuario_UNIQUE` (`id_usuario` ASC) ,
+  UNIQUE INDEX `usuario_UNIQUE` (`usuario` ASC) )
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `muebleria`.`productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `muebleria`.`productos` (
+  `id_mueble` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `imagen` VARCHAR(100) NULL,
+  `precio` INT NOT NULL,
+  `marca` VARCHAR(45) NULL,
+  `modelo` VARCHAR(45) NULL,
+  `id_categoria` INT NOT NULL,
+  `stock` INT(4) NOT NULL,
+  `descripcion` VARCHAR(500) NULL,
+  `id_usuario` INT NOT NULL,
+  PRIMARY KEY (`id_mueble`),
+  UNIQUE INDEX `id_mueble_UNIQUE` (`id_mueble` ASC) ,
+  INDEX `id_categoria_idx` (`id_categoria` ASC) ,
+  INDEX `id_usuario_idx` (`id_usuario` ASC) ,
+  CONSTRAINT `id_categoria`
+    FOREIGN KEY (`id_categoria`)
+    REFERENCES `muebleria`.`categorias` (`id_categoria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `muebleria`.`usuarios` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -82,11 +89,11 @@ CREATE TABLE IF NOT EXISTS `muebleria`.`facturas` (
   `id_factura` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATETIME NOT NULL,
   `total_venta` DECIMAL(11,3) NOT NULL,
-  `id_usuario` INT NULL,
+  `id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_factura`),
-  INDEX `id_usuario_idx` (`id_usuario` ASC),
-  UNIQUE INDEX `id_factura_UNIQUE` (`id_factura` ASC),
-  CONSTRAINT `id_usuario`
+  INDEX `id_usuario_idx` (`id_usuario` ASC) ,
+  UNIQUE INDEX `id_factura_UNIQUE` (`id_factura` ASC) ,
+  CONSTRAINT `id_usuario_factura`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `muebleria`.`usuarios` (`id_usuario`)
     ON DELETE NO ACTION
@@ -103,9 +110,8 @@ CREATE TABLE IF NOT EXISTS `muebleria`.`facturas_productos` (
   `id_factura` INT NOT NULL,
   `cantidad_vendida` VARCHAR(45) NOT NULL,
   `precio_unitario` DECIMAL(11,3) NOT NULL,
-  INDEX `id_mueble_idx` (`id_mueble` ASC),
-  INDEX `id_factura_idx` (`id_factura` ASC),
-  PRIMARY KEY (`id_mueble`, `id_factura`),
+  INDEX `id_mueble_idx` (`id_mueble` ASC) ,
+  INDEX `id_factura_idx` (`id_factura` ASC) ,
   CONSTRAINT `id_mueble`
     FOREIGN KEY (`id_mueble`)
     REFERENCES `muebleria`.`productos` (`id_mueble`)

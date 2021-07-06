@@ -5,6 +5,7 @@ import PubsList from './components/PubsList'
 import PubDetail from './components/PubDetail'
 import NotFound from './components/NotFound'
 import Register from './components/Register'
+import Carusel from './components/Carusel'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,9 +34,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <NavigationBar user={user} updateUser={updateUser} />
-
+      
       <Switch>
-        
+
         <Route exact path="/" children={<PubsList type="publicaciones" />}/>        
         
         <Route path="/mispublicaciones">
@@ -52,6 +53,8 @@ export default function App() {
 
         <NotFound />
       </Switch>
+
+      
 
     </BrowserRouter>
   );

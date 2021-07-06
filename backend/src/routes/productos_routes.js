@@ -1,5 +1,7 @@
 const express = require("express");
 const connection = require("../connection");
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
 
@@ -49,75 +51,108 @@ router.get("/:id_mueble", (req, res) => {
 
 
 //AGREGAR
-router.post("/", (req, res) => {
+router.post("/", (req, res) => {  
+  
+  let imageFileName = ''
+
+  if (req.files){
+    const pubImage = req.files.pubImage;
+    
+    imageFileName = Date.now() + path.extname(pubImage.name);
+
+    console.log(imageFileName)
+
+    pubImage.mv(`./public/images/${imageFileName}`, (err)=>{
+      if(err){
+        console.log(err);
+      }
+    });
+  }else{
+    console.log('No hay archivo')
+  }
+
   const sql = `INSERT INTO 
                productos (nombre, imagen, precio, marca, 
                modelo, id_categoria, stock, descripcion, id_usuario) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  const nombre = req.body.nombre;
-  const imagen = req.body.imagen;
-  const precio = req.body.precio;
-  const marca = req.body.marca;
-  const modelo = req.body.modelo;
-  const categoria = req.body.id_categoria;
-  const stock = req.body.stock;
-  const descripcion = req.body.descripcion;
-  const id_usuario = req.body.id_usuario;
-  
+  const values = [
+    req.body.pubTitulo,
+    imageFileName,
+    req.body.pubPrice,
+    req.body.pubMarca,
+    req.body.pubModelo,
+    req.body.pubCategory,
+    req.body.pubStock,
+    req.body.pubDescripcion,    
+    req.session.user.id_usuario,    
+  ]
 
-  connection.query(
-    sql,
-    [nombre, imagen, precio, marca, modelo, categoria, stock, descripcion, id_usuario],
-    (err, result) => {
+  connection.query(sql, values, (err, result) => {
       if (err) {
-        res.send("Error al insertar el producto");
+        console.log(err)
+        res.json({
+          status: 'error',
+          message: 'Error al realizar la publicación'
+        });
       } else {
-        res.send("Producto agregado");
+        res.json({
+          status: 'ok',
+          message: 'Publicacion exitosa'
+        });
       }
-    }
-  );
+    });
 });
 
 //MODIFICAR
 router.put("/:id_mueble", (req, res) => {
-  const sql = `UPDATE productos SET nombre=?, imagen=?, precio=?, marca=?, 
-               modelo=?, id_categoria=?, stock=?, descripcion=?, id_usuario=? WHERE id_mueble=?`;
+  let sqlUpdate = `UPDATE productos SET nombre=?, imagen=?, precio=?, marca=?, 
+               modelo=?, id_categoria=?, stock=?, descripcion=? WHERE id_mueble=?`;
 
-  const nombre = req.body.nombre;
-  const imagen = req.body.imagen;
-  const precio = req.body.precio;
-  const marca = req.body.marca;
-  const modelo = req.body.modelo;
-  const categoria = req.body.id_categoria;
-  const stock = req.body.stock;
-  const descripcion = req.body.descripcion;
-  const id_usuario = req.body.id_usuario;
-  const id_mueble = req.params.id_mueble;
+  let values = 
+    [req.body.pubTitulo,
+     req.body.pubImagen,
+     req.body.pubPrecio,
+     req.body.pubMarca,
+     req.body.pubModelo,
+     req.body.pubCategory,
+     req.body.pubStock,
+     req.body.pubDescripcion,
+     ]
+    
+  if ( req. files ){
+    //Averiguamos cual es el nombre del archivo de la imagen actual
+    const sqlCurrentImage = `SELECT imagen FROM productos WHERE id_mueble = ?`
 
-  connection.query(
-    sql,
-    [
-      nombre,
-      imagen,
-      precio,
-      marca,
-      modelo,
-      categoria,
-      stock,
-      descripcion,
-      id_usuario,
-      id_mueble
-      
-    ],
-    (err, result) => {
-      if (err) {
-        res.send("Error al modificar el producto");
-      } else {
-        res.send("Producto modificado");
+    connection.query(sqlCurrentImage,[req.params.id_mueble], (err,result)=>{
+      if(err){
+        console.log(err);
+      }else{
+        //Borrar archivo de la imagen actual
+        const fileToDelete = `./public/images/${result[0].imagen}`
+        fs.unlink(fileToDelete, (err)=>{
+          if(err){
+            console.log('Error al borrar el archivo')
+          }else{
+            console.log('Archivo borrado')
+          }
+        })
       }
-    }
-  );
+    })
+    
+    const pubImage = req.files.pubImage;
+
+    imageFileName = Date.now() + path.extname(pubImage.name);
+
+    console.log(imageFileName);
+
+    pubImage.mv(`./public/images/${imageFileName}`,(err)=>{
+      if(err) {
+        console.log(err);
+      }
+    })
+  }
+    
 });
 
 router.delete("/:id_mueble", (req, res) => {
@@ -134,5 +169,6 @@ router.delete("/:id_mueble", (req, res) => {
     }
   });
 });
+
 
 module.exports = router;

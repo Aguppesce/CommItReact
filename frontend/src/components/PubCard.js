@@ -18,8 +18,8 @@ export default function PubCard(props) {
   };
 
   const handleEditClick = (event) => {
-    alert('Editar')
     event.preventDefault();    
+    props.onEditClick(props.id_mueble);
   };
 
   const handleDeleteClick = (event) => {
@@ -36,7 +36,6 @@ export default function PubCard(props) {
             <Card.Title>
               {props.nombre} {props.marca}
             </Card.Title>
-            <Card.Title>Categoria: {props.id_categoria}</Card.Title>
           </Card.Body>
           <Card.Footer className="text-muted">${props.precio}</Card.Footer>
 
