@@ -4,7 +4,13 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-export default function Register() {
+
+export default function Register(props) {
+
+  const handleRegisterClick = (event) => {
+    event.preventDefault();
+    props.onRegisterClick.Default(props.id);
+  }
   return (
     <Container>
       <Row>
@@ -22,7 +28,7 @@ export default function Register() {
               <Form.Label>Repetir Contraseña</Form.Label>
               <Form.Control type="rePassword" />
             </Form.Group>
-            <Button className="" variant="success" type="submit">
+            <Button className="" variant="success" type="submit" onClick={handleRegisterClick}>
               Registrarse
             </Button>
           </Form>

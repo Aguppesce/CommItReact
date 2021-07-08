@@ -24,7 +24,7 @@ export default function PubCard(props) {
 
   const handleDeleteClick = (event) => {
     event.preventDefault();
-    alert('Eliminar')
+    props.onDeleteClick(props.id_mueble);
   };
 
   return (

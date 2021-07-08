@@ -52,11 +52,11 @@ export default function PubsList(props) {
           id_mueble={producto.id_mueble}
           type={props.type}
           onEditClick = {handleEditClick}
+          onDeleteClick={handleDeleteClick}
         />
       );
     })    
 
-    
     return cards;
   }
 
@@ -86,6 +86,36 @@ export default function PubsList(props) {
 
     setShowPubEditorModal(true);
   }
+
+  const handleDeleteClick = async(idPub) =>{
+    const confirm = await Swal.fire({
+      title: '¿Confirma que desea eliminar la publicación?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    //Si el usuario pulsó "Aceptar"
+    if(confirm.value){
+      const url = `http://localhost:8000/productos/${idPub}`;
+      
+      const response = await fetch(url,{
+        method: 'DELETE',
+        credentials: 'include',
+      })
+
+      const data = await response.json();
+
+      if(data.status==='ok'){
+        getPubs();
+        Swal.fire({title: data.message, icon: 'success'});
+      }else{
+        Swal.fire({title: data.message, icon: 'error'});
+      }
+    }
+  };
+
   return (  
     <>
       {props.type === 'mispublicaciones' && (

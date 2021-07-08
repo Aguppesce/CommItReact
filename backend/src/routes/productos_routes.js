@@ -106,13 +106,12 @@ router.post("/", (req, res) => {
 
 //MODIFICAR
 router.put("/:id_mueble", (req, res) => {
-  let sqlUpdate = `UPDATE productos SET nombre=?, imagen=?, precio=?, marca=?, 
-               modelo=?, id_categoria=?, stock=?, descripcion=? WHERE id_mueble=?`;
+  let sqlUpdate = `UPDATE productos SET nombre = ?, precio = ?, marca = ?, 
+               modelo = ?, id_categoria = ?, stock = ?, descripcion = ?`;
 
   let values = 
     [req.body.pubTitulo,
-     req.body.pubImagen,
-     req.body.pubPrecio,
+     req.body.pubPrice,
      req.body.pubMarca,
      req.body.pubModelo,
      req.body.pubCategory,
@@ -140,6 +139,7 @@ router.put("/:id_mueble", (req, res) => {
       }
     })
     
+    //Obtenemos la nueva imagen
     const pubImage = req.files.pubImage;
 
     imageFileName = Date.now() + path.extname(pubImage.name);
@@ -150,12 +150,48 @@ router.put("/:id_mueble", (req, res) => {
       if(err) {
         console.log(err);
       }
-    })
+    });
+    sqlUpdate += ', imagen = ?';
+    values.push(imageFileName);
   }
-    
+  sqlUpdate += ' WHERE id_mueble = ?';
+  values.push(req.params.id_mueble);
+  
+  connection.query(sqlUpdate, values, (err,result)=>{
+    if(err) {
+      res.json({
+        status: 'error',
+        message: 'Error al modificar la publicación',
+      })
+    }else{
+      res.json({
+        status: 'ok',
+        message: 'Se modifico correctamente',
+      })
+    }
+  })
 });
 
 router.delete("/:id_mueble", (req, res) => {
+
+  const sqlCurrentImage = `SELECT imagen FROM productos WHERE id_mueble = ?`
+
+    connection.query(sqlCurrentImage,[req.params.id_mueble], (err,result)=>{
+      if(err){
+        console.log(err);
+      }else{
+        //Borrar archivo de la imagen actual
+        const fileToDelete = `./public/images/${result[0].imagen}`
+        fs.unlink(fileToDelete, (err)=>{
+          if(err){
+            console.log('Error al borrar el archivo')
+          }else{
+            console.log('Archivo borrado')
+          }
+        })
+      }
+    })
+
   const sql = `DELETE FROM productos WHERE id_mueble=?`;
 
   const id_mueble = req.params.id_mueble;
