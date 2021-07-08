@@ -7,9 +7,13 @@ import { Link } from "react-router-dom";
 
 export default function LoginModal(props) {
 
+  const [user, setUser] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const handleUserChange = (event) => {
+    setUser(event.target.value)
+  }
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
   }
@@ -18,7 +22,7 @@ export default function LoginModal(props) {
   }
 
   const handleAcceptClick = ()=>{
-    props.handleLogin(email, password);
+    props.handleLogin(user, email, password);
   }
 
   
@@ -30,12 +34,11 @@ export default function LoginModal(props) {
       <Modal.Body>
         <Form>
           <Form.Group>
-            <Form.Label>E-mail</Form.Label>
+            <Form.Label>E-mail o Usuario</Form.Label>
             <Form.Control 
               type="email" 
-              value={email} 
-              onChange={ handleEmailChange }/>
-            
+              value={email || user} 
+              onChange={ handleEmailChange || handleUserChange}/>            
           </Form.Group>
 
           <Form.Group>

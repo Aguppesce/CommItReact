@@ -18,10 +18,10 @@ router.post('/',(req,res)=>{
 
   const sql = `SELECT * 
                FROM usuarios
-               WHERE email = ?
-                 AND password =?`
+               WHERE email = ? OR usuario = ?
+                 AND password = ?`
 
-  conexion.query(sql,[req.body.email, req.body.password], (err,result)=>{
+  conexion.query(sql,[req.body.user, req.body.email, req.body.password], (err,result)=>{
     if(err){
       console.log("Error al verificar el usuario")
     }else{

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -6,16 +6,27 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 export default function Register(props) {
+  
+  const [pubUser, setPubUser] = useState('');
 
   const handleRegisterClick = (event) => {
     event.preventDefault();
     props.onRegisterClick.Default(props.id);
   }
+
+  const handlePubUserChange = (event)=> {
+    setPubUser(event.target.value);
+  }
+
   return (
     <Container>
       <Row>
         <Col className="my-4">
           <Form>
+          <Form.Group controlId="formBasicUser">
+              <Form.Label>Nombre de Usuario</Form.Label>
+              <Form.Control type="user" />
+            </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>E-Mail</Form.Label>
               <Form.Control type="email" />

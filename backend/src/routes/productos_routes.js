@@ -192,7 +192,7 @@ router.delete("/:id_mueble", (req, res) => {
       }
     })
 
-  const sql = `DELETE FROM productos WHERE id_mueble=?`;
+  const sql = `DELETE FROM productos WHERE id_mueble = ?`;
 
   const id_mueble = req.params.id_mueble;
 

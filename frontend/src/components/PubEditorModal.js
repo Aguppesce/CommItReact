@@ -71,7 +71,7 @@ export default function PubEditorModal(props) {
   const handleSave = ()  => {
     const formData = new FormData();
 
-    formData.append( 'pubTitulo', pubTitulo );
+    formData.append( 'pubTitulo', pubTitulo);
     formData.append( 'pubPrice', pubPrice);
     formData.append( 'pubMarca', pubMarca);
     formData.append( 'pubModelo', pubModelo);

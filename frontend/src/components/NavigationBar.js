@@ -31,12 +31,13 @@ export default function NavigationBar(props) {
     setShowLoginModal(false);
   };
 
-  const handleLogin = async (email, password) => {
-    console.log(email, password);
+  const handleLogin = async (usuario, email, password) => {
+    console.log(usuario, email, password);
 
     const url = "http://localhost:8000/auth";
 
     const params = {
+      usuario,
       email, //también se puede escribir email: email
       password, //también se puede escribir password:password
     };
