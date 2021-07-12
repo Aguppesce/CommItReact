@@ -18,10 +18,10 @@ router.post('/',(req,res)=>{
 
   const sql = `SELECT * 
                FROM usuarios
-               WHERE email = ? OR usuario = ?
+               WHERE email = ?
                  AND password = ?`
 
-  conexion.query(sql,[req.body.user, req.body.email, req.body.password], (err,result)=>{
+  conexion.query(sql,[req.body.email, req.body.password], (err,result)=>{
     if(err){
       console.log("Error al verificar el usuario")
     }else{
@@ -45,8 +45,6 @@ router.post('/',(req,res)=>{
     }
   })
 
-  const emailValido = "pepe@gmail.com";
-  const passwordValida = "1234";
 
   /* if( req.body.email === emailValido && req.body.password === passwordValida){
     res.json({ message: 'Usuario valido!'});

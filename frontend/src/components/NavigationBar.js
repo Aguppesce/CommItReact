@@ -31,13 +31,12 @@ export default function NavigationBar(props) {
     setShowLoginModal(false);
   };
 
-  const handleLogin = async (usuario, email, password) => {
-    console.log(usuario, email, password);
+  const handleLogin = async (email, password) => {
+    console.log(email, password);
 
     const url = "http://localhost:8000/auth";
 
     const params = {
-      usuario,
       email, //también se puede escribir email: email
       password, //también se puede escribir password:password
     };
@@ -110,14 +109,17 @@ export default function NavigationBar(props) {
                 <Link to="/favoritos" className="nav-link">Favoritos</Link>
                 
                 <NavDropdown
-                
                   alignRight
                   title={props.user.name}
                   id="basic-nav-dropdown"
                 >
-                  <NavDropdown.Item href="#action/3.1">
-                    Ajustes
-                  </NavDropdown.Item>
+                  
+                  <Link                     
+                    to="/profileedit" 
+                    show={showLoginModal} 
+                    onClick={props.handleCloseLoginModal}>
+                      <NavDropdown.Item>Ajustes</NavDropdown.Item>
+                  </Link>                  
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
                     Cerrar Sesión

@@ -5,14 +5,14 @@ import PubsList from './components/PubsList'
 import PubDetail from './components/PubDetail'
 import NotFound from './components/NotFound'
 import Register from './components/Register'
-import Carusel from './components/Carusel'
+import ProfileEdit from './components/ProfileEdit'
+
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
-export default function App() {
+export default function App(props) {
+  
   
   const [user, setUser] = useState(null);
 
@@ -49,7 +49,12 @@ export default function App() {
 
         <Route exact path="/detail/:id" children={<PubDetail />}/>  
 
-        <Route exact path="/register" children={<Register />}/>
+        <Route exact path="/register" children={<Register />} />
+
+        <Route path="/profileedit">
+          <ProfileEdit type="profileedit" />
+        </Route>
+        
 
         <NotFound />
       </Switch>

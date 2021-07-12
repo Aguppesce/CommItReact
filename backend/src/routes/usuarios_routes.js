@@ -32,25 +32,25 @@ router.get('/:id_usuario', (req,res)=> {
 router.post('/', (req,res)=> {
   
   const sql = `INSERT INTO 
-               usuarios(usuario, nombre, apellido, email, direccion, 
-               provincia, localidad, cod_postal, password) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+               usuarios (usuario, email, password) 
+               VALUES (?, ?, ?)`;
   
   const usuario = req.body.usuario
-  const nombre = req.body.nombre
-  const apellido = req.body.apellido
   const email = req.body.email
-  const direccion = req.body.direccion
-  const provincia = req.body.provincia
-  const localidad = req.body.localidad
-  const cod_postal = req.body.cod_postal
   const password = req.body.password
 
-  connection.query(sql, [usuario, nombre, apellido, email, direccion, provincia, localidad, cod_postal, password], (err, result)=> {
-    if(err) {
-      res.send('Error al insertar el usuario');
-    }else{
-      res.send('Usuario agregado')
+  connection.query(sql, [usuario, email, password], (err, result)=> {
+    if (err) {
+      console.log(err)
+      res.json({
+        status: 'error',
+        message: 'Error al cargar el usuario'
+      });
+    } else {
+      res.json({
+        status: 'ok',
+        message: 'Registro exitosa'
+      });
     }
   });
 });

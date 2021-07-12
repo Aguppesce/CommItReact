@@ -7,13 +7,11 @@ import { Link } from "react-router-dom";
 
 export default function LoginModal(props) {
 
-  const [user, setUser] = useState('')
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleUserChange = (event) => {
-    setUser(event.target.value)
-  }
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
   }
@@ -22,8 +20,12 @@ export default function LoginModal(props) {
   }
 
   const handleAcceptClick = ()=>{
-    props.handleLogin(user, email, password);
+    props.handleLogin(email, password);
   }
+
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+  };
 
   
   return (
@@ -34,11 +36,11 @@ export default function LoginModal(props) {
       <Modal.Body>
         <Form>
           <Form.Group>
-            <Form.Label>E-mail o Usuario</Form.Label>
+            <Form.Label>E-mail</Form.Label>
             <Form.Control 
               type="email" 
-              value={email || user} 
-              onChange={ handleEmailChange || handleUserChange}/>            
+              value={email} 
+              onChange={handleEmailChange}/>            
           </Form.Group>
 
           <Form.Group>
@@ -49,7 +51,10 @@ export default function LoginModal(props) {
               onChange={ handlePasswordChange }/>
           </Form.Group>
         </Form>
-        <Link to="/register">No tienes una cuenta?</Link>
+        <Link 
+          to="/register" 
+          show={showLoginModal} 
+          onClick={props.handleCloseLoginModal}>No tienes una cuenta?</Link>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleCloseLoginModal}>
