@@ -29,16 +29,16 @@ router.post('/',(req,res)=>{
         
         console.log(result);
 
-        const nombreCompleto = `${result[0].nombre} ${result[0].apellido}`
+        const usuario = `${result[0].usuario}`
 
         req.session.user = { 
-          name: nombreCompleto,
+          name: usuario,
           id_usuario: result[0].id_usuario
         };
 
         console.log(req.session.user);
 
-        res.status(200).json({ message: 'Usuario valido!', data: nombreCompleto });    
+        res.status(200).json({ message: 'Usuario valido!', data: usuario });    
       }else{
         res.status(401).json({ message: 'Email y/o contraseña incorrecta'})    
       }

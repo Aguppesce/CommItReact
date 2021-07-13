@@ -35,11 +35,13 @@ router.post('/', (req,res)=> {
                usuarios (usuario, email, password) 
                VALUES (?, ?, ?)`;
   
-  const usuario = req.body.usuario
-  const email = req.body.email
-  const password = req.body.password
+  const values = [
+    req.body.usuario,
+    req.body.email,
+    req.body.password
+  ] 
 
-  connection.query(sql, [usuario, email, password], (err, result)=> {
+  connection.query(sql, values, (err, result)=> {
     if (err) {
       console.log(err)
       res.json({
@@ -49,28 +51,30 @@ router.post('/', (req,res)=> {
     } else {
       res.json({
         status: 'ok',
-        message: 'Registro exitosa'
+        message: 'Cuenta creada'
       });
     }
   });
 });
 
 router.put('/:id_usuario', (req,res)=> {
-  const sql = `UPDATE usuarios SET usuario=?, nombre=?, apellido=?, email=?, direccion=?, 
+  const sqlUpdate = `UPDATE usuarios SET nombre=?, apellido=?, email=?, direccion=?, 
                provincia=?, localidad=?, cod_postal=?, password=? WHERE id_usuario=?`;
   
-  const usuario = req.body.usuario
-  const nombre = req.body.nombre
-  const apellido = req.body.apellido
-  const email = req.body.email
-  const direccion = req.body.direccion
-  const provincia = req.body.provincia
-  const localidad = req.body.localidad
-  const cod_postal = req.body.cod_postal
-  const password = req.body.password
-  const id_usuario = req.params.id_usuario
+  let values = [
+    req.body.nombre,
+    req.body.apellido,
+    req.body.email,
+    req.body.direccion,
+    req.body.provincia,
+    req.body.localidad,
+    req.body.cod_postal,
+    req.body.password,
+    req.params.id_usuario
+  ]
+  
 
-  connection.query(sql, [usuario, nombre, apellido, email, direccion, provincia, localidad, cod_postal, password, id_usuario], (err, result)=> {
+  connection.query(sqlUpdate, values, [req.params.id_usuario], (err, result) => {
     if(err) {
       res.send('Error al modificar el usuario');
     }else{
@@ -78,6 +82,7 @@ router.put('/:id_usuario', (req,res)=> {
     }
   });
 })
+
 router.delete('/:id_usuario', (req,res)=> {
   const sql = `DELETE FROM usuarios WHERE id_usuario=?`;
 

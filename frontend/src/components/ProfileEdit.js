@@ -6,10 +6,25 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
+import {useParams} from 'react-router-dom';
+
 import Swal from 'sweetalert2'
 
 export default function ProfileEdit(props) {
   
+  const {id} = useParams();
+  const [usuario, setUsuario] = useState(null);
+
+  async function cargarUsuario() {
+    const url = 'http://localhost:8000/usuarios' + id
+
+    const response = await fetch(url)
+    const data = await response.json();
+
+    
+  }
+
+
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
@@ -43,104 +58,98 @@ export default function ProfileEdit(props) {
       .then((data)=>{
         props.onPutSaved(data.message);
     });
+
   }
 
 
-  const handlePutNombreChange = (event)=> {
+  const handleNombreChange = (event)=> {
     setNombre(event.target.value);
   }
-  const handlePutApellidoChange = (event)=> {
+  const handleApellidoChange = (event)=> {
     setApellido(event.target.value);
   }
-  const handlePutEmailChange = (event)=> {
+  const handleEmailChange = (event)=> {
     setEmail(event.target.value);
   }
-  const handlePutDireccionChange = (event)=> {
+  const handleDireccionChange = (event)=> {
     setDireccion(event.target.value);
   }
-  const handlePutProvinciaChange = (event)=> {
+  const handleProvinciaChange = (event)=> {
     setProvincia(event.target.value);
   }
-  const handlePutLocalidadChange = (event)=> {
+  const handleLocalidadChange = (event)=> {
     setLocalidad(event.target.value);
   }
-  const handlePutCodPostalChange = (event)=> {
+  const handleCodPostalChange = (event)=> {
     setCodPostal(event.target.value);
   }
-  const handlePutPasswordChange = (event)=> {
+  const handlePasswordChange = (event)=> {
     setPassword(event.target.value);
   }
-  const handleUserSaved = (message) =>{
-
-    Swal.fire({
-      text: message,
-      icon: 'success'
-    })
-  }
-
-
+  
   return (
     <Container>
       <Row>
         <Col className="my-4">
+          <h1>CREAR USUARIO</h1>
           <Form>
-            <Form.Group controlId="formBasicName">
+            <Form.Group>
               <Form.Label>Nombre</Form.Label>
               <Form.Control 
                 type="text" 
                 value={nombre} 
-                onChange={handlePutNombreChange}/>
+                onChange={handleNombreChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicSecondName">
+            <Form.Group>
               <Form.Label>Apellido</Form.Label>
               <Form.Control 
                 type="text" 
                 value={apellido} 
-                onChange={handlePutApellidoChange}/>
+                onChange={handleApellidoChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>E-Mail</Form.Label>
+            <Form.Group>
+              <Form.Label>Cambiar E-Mail</Form.Label>
               <Form.Control 
                 type="email" 
                 value={email} 
-                onChange={handlePutEmailChange}/>
+                onChange={handleEmailChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicStreet">
+            <Form.Group>
               <Form.Label>Direccion</Form.Label>
               <Form.Control 
                 type="text" 
                 value={direccion} 
-                onChange={handlePutDireccionChange}/>
+                onChange={handleDireccionChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicState">
+            <Form.Group>
               <Form.Label>Provincia</Form.Label>
               <Form.Control 
                 type="text" 
                 value={provincia} 
-                onChange={handlePutProvinciaChange}/>
+                onChange={handleProvinciaChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicLocal">
+            <Form.Group>
               <Form.Label>Localidad</Form.Label>
               <Form.Control 
                 type="text" 
                 value={localidad} 
-                onChange={handlePutLocalidadChange}/>
+                onChange={handleLocalidadChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicCode">
+            <Form.Group>
               <Form.Label>Código Postal</Form.Label>
               <Form.Control 
                 type="text" 
                 value={codPostal} 
-                onChange={handlePutCodPostalChange}/>
+                onChange={handleCodPostalChange}/>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Contraseña</Form.Label>
+            <Form.Group>
+              <Form.Label>Cambiar Contraseña</Form.Label>
               <Form.Control 
                 type="password" 
                 value={password} 
-                onChange={handlePutPasswordChange}/>
+                onChange={handlePasswordChange}/>
             </Form.Group>
-            <Button className="" variant="success" type="submit" onClick={handlePutUser} onUserSaved={handleUserSaved}>
+            <Button className="" variant="success" type="submit" onClick={handlePutUser}>
               Guardar
             </Button>
           </Form>

@@ -77,6 +77,7 @@ export default function PubsList(props) {
       text: message,
       icon: 'success'      
     })
+    
   }
 
   const handleEditClick = (idPub) => {

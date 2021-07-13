@@ -1,44 +1,45 @@
-import React, { useState,useEffect } from "react";
-import './App.css'
+import React, { useState, useEffect } from "react";
+
+import "./App.css";
 import NavigationBar from "./components/NavigationBar";
-import PubsList from './components/PubsList'
-import PubDetail from './components/PubDetail'
-import NotFound from './components/NotFound'
-import Register from './components/Register'
-import ProfileEdit from './components/ProfileEdit'
+import PubsList from "./components/PubsList";
+import PubDetail from "./components/PubDetail";
+import NotFound from "./components/NotFound";
+import Register from "./components/Register";
+import ProfileEdit from "./components/ProfileEdit";
+import Carrousel from "./components/Carrousel"
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function App(props) {
-  
-  
+import "bootstrap/dist/css/bootstrap.min.css";
+
+export default function App() {
   const [user, setUser] = useState(null);
 
-  useEffect( checkUser, []);
+  useEffect(checkUser, []);
 
-  function checkUser(){
-    fetch('http://localhost:8000/auth/check',{
-      credentials: 'include',
+  function checkUser() {
+    fetch("http://localhost:8000/auth/check", {
+      credentials: "include",
     })
-    .then((response) => response.json())
-    .then((data)=> {
-      updateUser(data.data);
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        updateUser(data.data);
+      });
   }
 
   const updateUser = (newUser) => {
     setUser(newUser);
-  }
+  };
   return (
     <BrowserRouter>
       <NavigationBar user={user} updateUser={updateUser} />
+
       
       <Switch>
+        <Route exact path="/" children={<PubsList type="publicaciones" />} />
 
-        <Route exact path="/" children={<PubsList type="publicaciones" />}/>        
-        
         <Route path="/mispublicaciones">
           <PubsList type="mispublicaciones" />
         </Route>
@@ -47,20 +48,18 @@ export default function App(props) {
           <PubsList type="favoritos" />
         </Route>
 
-        <Route exact path="/detail/:id" children={<PubDetail />}/>  
+        <Route exact path="/detail/:id" children={<PubDetail />} />
 
         <Route exact path="/register" children={<Register />} />
 
         <Route path="/profileedit">
           <ProfileEdit type="profileedit" />
         </Route>
-        
 
         <NotFound />
       </Switch>
 
-      
-
+      <footer className="footer grid-container">Todos los derechos reservados.</footer>
     </BrowserRouter>
   );
 }

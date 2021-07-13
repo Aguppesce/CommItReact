@@ -7,16 +7,16 @@ import Container from "react-bootstrap/Container";
 
 import Swal from 'sweetalert2'
 
-export default function Register(props) {
+export default function Register() {
   
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState('');
 
   const [usuario, setUsuario] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-
-  const handleSave = async (message)  => {
+  const handleRegister = ()  => {
+    
     const formData = new FormData();
 
     formData.append( 'usuario', usuario);    
@@ -25,20 +25,16 @@ export default function Register(props) {
 
     const url = `http://localhost:8000/usuarios`
     
-    const response = await fetch(url, 
-      {method: 'POST', 
-      body: formData, 
-      credentials:'include'})
-    
-    const data = await response.json();
-
-    setUsuarios(data);
-
-    Swal.fire({
-      text: message,
-      icon: 'success'
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+      credentials: 'include'
     })
-  }
+      .then((response)=> response.json())
+      .then((data)=>{
+        setUsuarios(data.data);
+    });
+    }
     
 
   const handleUsuarioChange = (event)=> {
@@ -81,11 +77,9 @@ export default function Register(props) {
             <Form.Group>
             <Form.Label>Repetir Contraseña</Form.Label>
               <Form.Control 
-                type="password" 
-                value={password} 
-                onChange={handlePasswordChange}/>
+                type="password"/>
             </Form.Group>
-            <Button className="" variant="success" type="submit" onClick={handleSave}>
+            <Button variant="success" type="submit" onClick={handleRegister}>
               Registrarse
             </Button>
           </Form>

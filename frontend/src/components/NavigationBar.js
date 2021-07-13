@@ -113,13 +113,14 @@ export default function NavigationBar(props) {
                   title={props.user.name}
                   id="basic-nav-dropdown"
                 >
-                  
+                  <NavDropdown.Item>
                   <Link                     
                     to="/profileedit" 
                     show={showLoginModal} 
                     onClick={props.handleCloseLoginModal}>
-                      <NavDropdown.Item>Ajustes</NavDropdown.Item>
-                  </Link>                  
+                      Ajustes
+                  </Link>
+                  </NavDropdown.Item>       
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
                     Cerrar Sesión
