@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 export default function ProfileEdit(props) {
   
   const {id} = useParams();
+  
   const [usuario, setUsuario] = useState(null);
 
   async function cargarUsuario() {

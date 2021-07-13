@@ -34,6 +34,7 @@ export default function Register() {
       .then((data)=>{
         setUsuarios(data.data);
     });
+    
     }
     
 

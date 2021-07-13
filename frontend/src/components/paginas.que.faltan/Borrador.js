@@ -270,3 +270,33 @@ router.delete('/:id_usuario', (req,res)=> {
 })
 
 module.exports = router;
+
+
+
+fetch(url, {
+  method: 'POST',
+  body: formData,
+  headers: { "Content-Type": "application/json" },
+  credentials: 'include'
+})
+  .then((response)=> response.json())
+  .then((data)=>{
+    setUsuarios(data.data);
+});
+
+
+const response = await fetch(url, {
+  method: 'POST',
+  body: JSON.stringify(params),
+  headers: { "Content-Type": "application/json"},
+  credentials: 'include'
+});
+
+const data = await response.json();
+
+if (response.status === 200) {
+  props.setUsuarios({ name: data.data });
+} else {
+  alert(data.message);
+}
+console.log(data);

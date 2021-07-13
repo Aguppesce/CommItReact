@@ -18,7 +18,7 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function NavigationBar(props) {
   const logoStyle = {
-    height: "10vh",
+    height: "6vh",
   };
 
   const [showLoginModal, setShowLoginModal] = useState(false);
