@@ -40,13 +40,13 @@ router.post('/', (req,res)=> {
     req.body.email,
     req.body.password
   ] 
-
+  
   connection.query(sql, values, (err, result)=> {
     if (err) {
       console.log(err)
       res.json({
         status: 'error',
-        message: 'Error al cargar el usuario'
+        message: 'Error al crear el usuario'
       });
     } else {
       res.json({
@@ -55,6 +55,19 @@ router.post('/', (req,res)=> {
       });
     }
   });
+
+  /* conexion.query(sql,values,(err,result)=>{
+    if(err){
+      console.log("Error al crear el usuario")
+    }else{
+      if(result.length === 1){
+        res.status(200).json({message: 'Usuario creado!'});
+      }else{
+        res.status(401).json({message: 'Datos incorrectos!'})
+      }
+    }
+  }) */
+  
 });
 
 router.put('/:id_usuario', (req,res)=> {

@@ -7,7 +7,6 @@ import PubDetail from "./components/PubDetail";
 import NotFound from "./components/NotFound";
 import Register from "./components/Register";
 import ProfileEdit from "./components/ProfileEdit";
-import Carrousel from "./components/paginas.a.reactBootstrap/Carrousel"
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 

@@ -34,7 +34,20 @@ export default function Register() {
       .then((data)=>{
         setUsuarios(data.data);
     });
-    
+
+    /* const response = fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      credentials: "include",
+    });
+
+    const data = response.json();
+
+    if (response.status === 200) {
+      setUsuarios({ name: data.data });
+    } else {
+      alert(data.message);
+    } */    
     }
     
 
@@ -47,7 +60,6 @@ export default function Register() {
   const handlePasswordChange = (event)=> {
     setPassword(event.target.value);
   }
-
 
   return (
     <Container>

@@ -54,7 +54,7 @@ export default function LoginModal(props) {
         <Link 
           to="/register" 
           show={showLoginModal} 
-          onClick={props.handleCloseLoginModal}>No tienes una cuenta?</Link>
+          onClick={props.handleCloseLoginModal}>¿No tienes una cuenta?</Link>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleCloseLoginModal}>
